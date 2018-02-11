@@ -1,3 +1,8 @@
+'''
+By adidinchuk park. adidinchuk@gmail.com.
+https://github.com/adidinchuk/tf-linear-regression
+'''
+
 import matplotlib.pyplot as plt
 
 

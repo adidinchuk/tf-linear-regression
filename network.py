@@ -1,11 +1,18 @@
+'''
+By adidinchuk park. adidinchuk@gmail.com.
+https://github.com/adidinchuk/tf-linear-regression
+'''
+
 import tensorflow as tf
 import numpy as np
 import utils
+import hyperparams as hp
 
 
 class Network:
 
-    def __init__(self, reg_type='tf'):
+    # Available loss_functions : l1, l2, pseudo_huber
+    def __init__(self, reg_type='tf', loss_function='l2'):
         # init
         self.type = reg_type
         self.session = tf.Session()
@@ -20,7 +27,8 @@ class Network:
 
         # model & loss
         self.model_output = tf.add(tf.matmul(self.inputs, self.A), self.b)
-        self.loss = tf.reduce_mean(tf.square(tf.subtract(self.model_output, self.outputs)))
+        self.loss = None
+        self.set_loss(loss_function)
 
         # init variables
         self.init = tf.global_variables_initializer()
@@ -93,3 +101,30 @@ class Network:
         # plot training and testing loss if required
         if plot:
             utils.plot_loss(train_loss_result, test_loss_result)
+
+    # L2 loss function L = a^2
+    def l2(self):
+        self.loss = tf.reduce_mean(tf.square(self.miss()))
+
+    # L1 loss function L = |a|
+    def l1(self):
+        self.loss = tf.reduce_mean(tf.abs(self.miss()))
+
+    # Pseudo Huber loss function L = 𝛿^2 * ( √(1 + (a/𝛿)^2) - 1)
+    def pseudo_huber(self):
+        self.loss = tf.reduce_mean(tf.multiply(tf.square(hp.ph_delta),
+                                               tf.sqrt(1 + tf.square(self.miss()) / hp.ph_delta) - 1))
+
+    def miss(self):
+        return tf.subtract(self.model_output, self.outputs)
+
+    # Available loss_functions : l1, l2, pseudo_huber
+    def set_loss(self, loss_function):
+        if loss_function == 'l2':
+            self.l2()
+        elif loss_function == 'l1':
+            self.l1()
+        elif loss_function == 'pseudo_huber':
+            self.pseudo_huber()
+        else:
+            self.l2()

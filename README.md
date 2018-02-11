@@ -10,7 +10,7 @@ TensorFlow >= 1.4.0
 ```
 
 ## Model description
-This implementation leverages the GradientDescentOptimizer method and utilizes the L2 loss function.
+This implementation leverages the GradientDescentOptimizer method and utilizes the L2 loss function. L1 and Pseudo Huber loss functions are also available 
 
 ## Data
 The model was tested using the Wisconsin breast cancer data set from [UC Irvine Machine Learning Repository](http://mlr.cs.umass.edu/ml/index.html) found [here](http://mlr.cs.umass.edu/ml/machine-learning-databases/breast-cancer-wisconsin/). Because this was a learning project the data set was reduced to having the Uniformity of Cell Size and Uniformity of Cell Shape as inputs and Marginal Adhesion as the output.
@@ -28,6 +28,7 @@ The model was tested using the Wisconsin breast cancer data set from [UC Irvine 
 * `batch_size = 50` -- training batch size
 * `epochs = 100` -- number of training epochs
 * `validation_size = 0.4` -- percentage of the data set to be used for validation against over-fitting
+* `ph_delta = 0.5` -- Pseudo Huber delta coefficient
 
 ## Training
 Training is done by breaking the data set into training and testing data set in order to help evaluate over-fitting. The training is then conducted over several epochs to produce the results.

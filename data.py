@@ -1,4 +1,8 @@
-# import numpy as np
+'''
+By adidinchuk park. adidinchuk@gmail.com.
+https://github.com/adidinchuk/tf-linear-regression
+'''
+
 import hyperparams as hp
 
 
