@@ -1,7 +1,7 @@
 # Linear Regression implementation using TensorFlow
 
 ## Overview
-This is a very basic implementation of multivariable linear regression using Google TensorFlow. The purpose of this project is to introduce myself to TF's data flow graphs and general best practices around python and machine learning.
+This is a basic implementation of multivariable linear regression using Google TensorFlow. The purpose of this project is to introduce myself to TF's data flow graphs and general best practices around python and machine learning.
 
 ## Requirements
 ```bash
