@@ -1,7 +1,7 @@
 # Linear Regression implementation using TensorFlow
 
 ## Overview
-This is a basic implementation of multivariable linear regression using Google TensorFlow. The purpose of this project is to introduce myself to TF's data flow graphs and general best practices around python and machine learning.
+This is a basic implementation of multivariable linear regression using Google's TensorFlow. The purpose of this project is to introduce myself to TF's data flow graphs and general best practices around python and machine learning.
 
 ## Requirements
 ```bash
@@ -10,7 +10,7 @@ TensorFlow >= 1.4.0
 ```
 
 ## Model description
-This implementation leverages the GradientDescentOptimizer method and utilizes the L2 loss function. L1 and Pseudo Huber loss functions are also available 
+This implementation leverages the GradientDescentOptimizer method and utilizes the L2, L1 and Pseudo Huber loss functions. 
 
 ## Data
 The model was tested using the Wisconsin breast cancer data set from [UC Irvine Machine Learning Repository](http://mlr.cs.umass.edu/ml/index.html) found [here](http://mlr.cs.umass.edu/ml/machine-learning-databases/breast-cancer-wisconsin/). Because this was a learning project the data set was reduced to having the Uniformity of Cell Size and Uniformity of Cell Shape as inputs and Marginal Adhesion as the output.
@@ -31,7 +31,7 @@ The model was tested using the Wisconsin breast cancer data set from [UC Irvine 
 * `ph_delta = 0.5` -- Pseudo Huber delta coefficient
 
 ## Training
-Training is done by breaking the data set into training and testing data set in order to help evaluate over-fitting. The training is then conducted over several epochs to produce the results.
+Training is done by breaking the data into training and testing sets in order to help evaluate over-fitting. The training is then conducted over several epochs.
 
 The second and third columns are extracted from the data file for inputs and the forth column for outputs. If a different data set is used or if different features are desired configure the below code in the `train.py` file.
 ```bash
@@ -40,7 +40,7 @@ output_data = [[int(row[3])] for row in data]
 ```
 
 ## Results
-As the purpose of this implementation is purely educational, curacy of the final model is less relevant then the demonstration of increasing accuracy as a result of training. 
+As the purpose of this implementation is purely educational, accuracy of the final model is less relevant then the demonstration of loss reduction as a result of training. 
 
 The results were found to vary drastically depending on the initialized variable weights and on the ratio of outliers falling into the testing data set. 
 
