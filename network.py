@@ -37,6 +37,7 @@ class Network:
 
         self.optimization = None
         self.training_step = None
+        self.regularization = None
 
     def train(self, inputs, targets,
               lr=0.01, batch_size=50,
@@ -112,6 +113,7 @@ class Network:
     def pseudo_huber(self):
         self.loss = tf.reduce_mean(tf.multiply(tf.square(hp.ph_delta),
                                                tf.sqrt(1 + tf.square(self.miss()) / hp.ph_delta) - 1))
+
 
     def miss(self):
         return tf.subtract(self.model_output, self.target)
