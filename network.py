@@ -12,17 +12,18 @@ import hyperparams as hp
 class Network:
 
     # Available loss_functions : l1, l2, pseudo_huber
-    def __init__(self, reg_type='tf', loss_function='l2'):
+    def __init__(self, features, reg_type='tf', loss_function='l2'):
         # init
         self.type = reg_type
         self.session = tf.Session()
+        self.features = features
 
         # placeholders
-        self.inputs = tf.placeholder(shape=[None, 2], dtype=tf.float32)
-        self.outputs = tf.placeholder(shape=[None, 1], dtype=tf.float32)
+        self.inputs = tf.placeholder(shape=[None, self.features], dtype=tf.float32)
+        self.target = tf.placeholder(shape=[None, 1], dtype=tf.float32)
         
         # variables
-        self.A = tf.Variable(tf.random_normal(shape=[2, 1]))
+        self.A = tf.Variable(tf.random_normal(shape=[self.features, 1]))
         self.b = tf.Variable(tf.random_normal(shape=[1, 1]))
 
         # model & loss
@@ -34,11 +35,10 @@ class Network:
         self.init = tf.global_variables_initializer()
         self.session.run(self.init)
 
-        # set optimization method (Gradient Descent)
         self.optimization = None
         self.training_step = None
 
-    def train(self, inputs, outputs, 
+    def train(self, inputs, targets,
               lr=0.01, batch_size=50,
               epochs=100, validation_size=0.4,
               plot=False):
@@ -57,11 +57,11 @@ class Network:
 
         # train
         train_inputs = inputs[train_index]
-        train_outputs = outputs[train_index]
+        train_target = targets[train_index]
 
         # test
         test_inputs = inputs[test_index]
-        test_outputs = outputs[test_index]
+        test_target = targets[test_index]
 
         if train_size < batch_size:
             raise Exception("Not enough data to accommodate batch size.")
@@ -73,15 +73,15 @@ class Network:
         for i in range(epochs):
             batch_sample = np.random.choice(len(train_inputs), size=batch_size)
             self.session.run(self.training_step, feed_dict={self.inputs: train_inputs[batch_sample],
-                                                            self.outputs: train_outputs[batch_sample]})
+                                                            self.target: train_target[batch_sample]})
 
             # if plotting, record every epoch
             if plot:
                 train_loss = self.session.run(self.loss,
-                                              feed_dict={self.inputs: train_inputs, self.outputs: train_outputs})
+                                              feed_dict={self.inputs: train_inputs, self.target: train_target})
                 train_loss_result.append(train_loss)
                 test_loss = self.session.run(self.loss,
-                                             feed_dict={self.inputs: test_inputs, self.outputs: test_outputs})
+                                             feed_dict={self.inputs: test_inputs, self.target: test_target})
                 test_loss_result.append(test_loss)
 
             # display result every time 20% of the required epochs are processed
@@ -90,11 +90,9 @@ class Network:
                 # if plotting loss is processed above
                 if not plot:
                     train_loss = self.session.run(self.loss,
-                                                  feed_dict={self.inputs: train_inputs, self.outputs: train_outputs})
-                    train_loss_result.append(train_loss)
+                                                  feed_dict={self.inputs: train_inputs, self.target: train_target})
                     test_loss = self.session.run(self.loss,
-                                                 feed_dict={self.inputs: test_inputs, self.outputs: test_outputs})
-                    test_loss_result.append(test_loss)
+                                                 feed_dict={self.inputs: test_inputs, self.target: test_target})
 
                 utils.print_progress(i, epochs, train_loss, test_loss)
 
@@ -116,7 +114,7 @@ class Network:
                                                tf.sqrt(1 + tf.square(self.miss()) / hp.ph_delta) - 1))
 
     def miss(self):
-        return tf.subtract(self.model_output, self.outputs)
+        return tf.subtract(self.model_output, self.target)
 
     # Available loss_functions : l1, l2, pseudo_huber
     def set_loss(self, loss_function):

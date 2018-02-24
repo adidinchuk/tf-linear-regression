@@ -51,7 +51,7 @@ Below are the results after 4 separate training sessions using the hyperparams l
 Training curve for the train and test data set 
 <img src="fig/session_1_fig.svg">
 
-Cost output every 20 epoches:
+Cost output every 20 epochs:
 ```
 Epoch #20 of 100
 Training data loss:  5.2501764
@@ -75,7 +75,7 @@ Testing data loss:  1.9470495
 Training curve for the train and test data set 
 <img src="fig/session_2_fig.svg">
 
-Cost output every 20 epoches:
+Cost output every 20 epochs:
 ```
 Epoch #20 of 100
 Training data loss:  2.3909023
@@ -99,7 +99,7 @@ Testing data loss:  1.7564405
 Training curve for the train and test data set 
 <img src="fig/session_3_fig.svg">
 
-Cost output every 20 epoches:
+Cost output every 20 epochs:
 ```
 Epoch #20 of 100
 Training data loss:  1.2353559
@@ -124,7 +124,7 @@ Testing data loss:  1.6346318
 Training curve for the train and test data set 
 <img src="fig/session_4_fig.svg">
 
-Cost output every 20 epoches:
+Cost output every 20 epochs:
 ```
 Epoch #20 of 100
 Training data loss:  1.1897182
